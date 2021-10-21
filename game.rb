@@ -73,33 +73,36 @@ end
 
 class TTT
   def ask_for_player_name
-    puts "Hello, what your name?"
+    puts "Bonjour, quel est ton prénom?"
     while true
       print "> "
       player_name = gets.chomp
-      return puts "Hello #{player_name} !\n\n"
+      return puts "Salut #{player_name} !\n\n"
     end
   end
   def ask_for_player
-    puts "Who do you want to play first?"
-    puts "1. you"
-    puts "2. computer"
+    puts "Qui va joué en premier?"
+    puts "1. Toi"
+    puts "2. Ordinateur (info: il faudra attendre quelques secondes pour le debut du jeu)"
     while true
-      print "choice: "
+      print "Choisir: "
       ans = gets.chomp
-      return "human"    if ans == "1"
-      return "computer" if ans == "2"
+      return "Toi"    if ans == "1"
+      return "Ordinateur" if ans == "2"
     end
   end
   def ask_for_move position
     while true
-      print "move: "
+      print "0 | 1 | 2\n"
+      print "3 | 4 | 5\n"
+      print "6 | 7 | 8\n"
+      print "Choisi une case: "
       ans = gets.chomp
       return ans.to_i if ans =~ /^\d+$/ && position.board[ans.to_i] == "-"
     end
   end
   def other_player
-    @player == "human" ? "computer" : "human"
+    @player == "Toi" ? "Ordinateur" : "Toi"
   end
   def play_game
     @player = ask_for_player_name
@@ -108,15 +111,15 @@ class TTT
     while !position.end?
       puts position
       puts
-      idx = @player == "human" ? ask_for_move(position) : position.best_move
+      idx = @player == "Toi" ? ask_for_move(position) : position.best_move
       position.move(idx)
       @player = other_player
     end
     puts position
     if position.blocked?
-      puts "tied"
+      puts "Match nul"
     else
-      puts "winner: #{other_player}"
+      puts "Gagnant: #{other_player}"
     end
   end
 end
